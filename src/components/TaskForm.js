@@ -4,6 +4,7 @@ import { createTask} from '../api/TaskApi';
 export default function TaskForm() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+  const [message, showMessage] = useState(false);
   const addTask = () => {
      // console.log(title, desc);
      createTask({
@@ -11,6 +12,9 @@ export default function TaskForm() {
         "desc": desc
      }).then(res => {
         console.log(res);
+        showMessage(true);
+     }).catch(e => {
+        console.error(e);
      })
   }
   return (
@@ -25,6 +29,11 @@ export default function TaskForm() {
         <input type='text' onChange={(e) => setDesc(e.target.value)} name="desc" value={desc}  />
     </div>
     <button onClick={addTask}>Add Task</button>
+    {message !== '' && (
+        <div>
+            Data Saved
+        </div>
+    )}
     </>
    
   )

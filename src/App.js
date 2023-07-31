@@ -10,9 +10,13 @@ function App() {
 
   useEffect(() => {
     async function getData(){
-       const data = await fetchTasks();
-       console.log('data', data);
-       setData(data);
+      try{
+        const data = await fetchTasks();
+        console.log('data', data);
+        setData(data);
+      } catch(e){
+        console.error(e)
+      }
     }
     getData();
   }, [])

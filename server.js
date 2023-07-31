@@ -7,11 +7,14 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 
-let jsonParser = bodyParser.json();
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // console.log('db', json);
 app.use(cors());
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
+
 
 app.get('/', (req, res) => { 
     console.log('test', jsonData);
@@ -21,9 +24,9 @@ app.get('/', (req, res) => {
 app.post('/create', jsonParser,  (req, res) => { 
     // console.log('test', jsonData);
     console.log('req.body.title', req.body);
-    // jsonData
-    fs.writeFileSync('./db.json', jsonData)
-    res.json(jsonData);
+    jsonData.push(req.body);
+    fs.writeFileSync('./db.json', JSON.stringify(jsonData))
+    res.json({message: 'success'});
 });
 
 app.listen(port, () => {
